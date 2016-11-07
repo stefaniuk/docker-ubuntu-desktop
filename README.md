@@ -16,3 +16,8 @@ Alternatively you can build the image yourself.
 
     docker build --tag stefaniuk/ubuntu-desktop \
         github.com/stefaniuk/docker-ubuntu-desktop
+
+WIP
+---
+
+    make clean build run

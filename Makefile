@@ -27,6 +27,18 @@ build:
 		--rm .
 	@docker tag $(IMAGE):$(shell cat VERSION) $(IMAGE):latest
 
+run:
+	@docker stop $(IMAGE) > /dev/null 2>&1 ||:
+	@docker rm $(IMAGE) > /dev/null 2>&1 ||:
+	@docker run --interactive --tty \
+		--name $(NAME) \
+		--hostname $(NAME) \
+		--env "USER=default" \
+		--env "RUN_AS=default" \
+		--publish 5901:5901 \
+		$(IMAGE) \
+		/bin/bash -cli "vncserver :1 -geometry 1280x800 -depth 24 && tail -F /home/default/.vnc/*.log"
+
 create:
 	@docker stop $(IMAGE) > /dev/null 2>&1 ||:
 	@docker rm $(IMAGE) > /dev/null 2>&1 ||:
@@ -34,10 +46,10 @@ create:
 		--name $(NAME) \
 		--hostname $(NAME) \
 		--env "USER=default" \
+		--env "RUN_AS=default" \
 		--publish 5901:5901 \
-		--privileged \
 		$(IMAGE) \
-		/bin/bash --login -c "strace vncserver :1 -geometry 1280x800 -depth 24"
+		/bin/bash -cli "vncserver :1 -geometry 1280x800 -depth 24 && tail -F /home/default/.vnc/*.log"
 
 start:
 	@docker start $(NAME)
@@ -57,7 +69,7 @@ clean:
 	@docker stop $(NAME) > /dev/null 2>&1 ||:
 	@docker rm $(NAME) > /dev/null 2>&1 ||:
 
-remove: clean
+password: clean
 	@docker rmi $(IMAGE):$(shell cat VERSION) > /dev/null 2>&1 ||:
 	@docker rmi $(IMAGE):latest > /dev/null 2>&1 ||:
 
