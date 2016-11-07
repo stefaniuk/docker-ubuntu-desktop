@@ -12,7 +12,7 @@ help:
 	@echo
 	@echo "Usage:"
 	@echo
-	@echo "    make build|create|start|stop|test|bash|clean|remove|push [APT_PROXY|APT_PROXY_SSL=ip:port]"
+	@echo "    make build|run|create|start|stop|test|bash|clean|remove|push [APT_PROXY|APT_PROXY_SSL=ip:port]"
 	@echo
 
 build:
@@ -30,7 +30,7 @@ build:
 run:
 	@docker stop $(IMAGE) > /dev/null 2>&1 ||:
 	@docker rm $(IMAGE) > /dev/null 2>&1 ||:
-	@docker run --interactive --tty \
+	@docker run --rm --interactive --tty \
 		--name $(NAME) \
 		--hostname $(NAME) \
 		--env "USER=default" \
@@ -58,18 +58,21 @@ stop:
 	@docker stop $(NAME)
 
 test:
-	@docker exec --interactive --tty $(NAME) \
+	@docker exec --interactive --tty \
+		--user "default" \
+		$(NAME) \
 		ps aux
 
 bash:
-	@docker exec --interactive --tty $(NAME) \
+	@docker exec --interactive --tty \
+		$(NAME) \
 		/bin/bash --login ||:
 
 clean:
 	@docker stop $(NAME) > /dev/null 2>&1 ||:
 	@docker rm $(NAME) > /dev/null 2>&1 ||:
 
-password: clean
+remove: clean
 	@docker rmi $(IMAGE):$(shell cat VERSION) > /dev/null 2>&1 ||:
 	@docker rmi $(IMAGE):latest > /dev/null 2>&1 ||:
 
