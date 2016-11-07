@@ -4,6 +4,8 @@ MAINTAINER daniel.stefaniuk@gmail.com
 ARG APT_PROXY
 ARG APT_PROXY_SSL
 
+ENV SYSTEM_USER_PASSWORD="password"
+
 RUN set -ex \
     \
     && if [ -n "$APT_PROXY" ]; then echo "Acquire::http { Proxy \"http://${APT_PROXY}\"; };" > /etc/apt/apt.conf.d/00proxy; fi \
@@ -14,11 +16,16 @@ RUN set -ex \
         lxde-core \
         lxterminal \
         tightvncserver \
+        xfonts-base \
     \
     && rm -rf /tmp/* /var/tmp/* /var/lib/apt/lists/* /var/cache/apt/* \
     && rm -f /etc/apt/apt.conf.d/00proxy
 
-WORKDIR /data
+#RUN mkdir -p /home/$SYSTEM_USER/.vnc
+#RUN echo $SYSTEM_USER_PASSWORD | vncpasswd -f > /home/$SYSTEM_USER/.vnc/passwd
+#RUN chmod 600 /home/$SYSTEM_USER/.vnc/passwd
+#RUN chown -R $SYSTEM_USER:$SYSTEM_USER /home/$SYSTEM_USER/.vnc
+
 EXPOSE 5901
 
 ### METADATA ###################################################################

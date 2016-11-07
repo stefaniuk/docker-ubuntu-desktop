@@ -33,8 +33,11 @@ create:
 	@docker create --interactive --tty \
 		--name $(NAME) \
 		--hostname $(NAME) \
+		--env "USER=default" \
+		--publish 5901:5901 \
+		--privileged \
 		$(IMAGE) \
-		/bin/bash --login
+		/bin/bash --login -c "strace vncserver :1 -geometry 1280x800 -depth 24"
 
 start:
 	@docker start $(NAME)
