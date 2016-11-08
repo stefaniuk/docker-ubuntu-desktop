@@ -11,6 +11,7 @@ dependencies:
     - mkdir -p ~/docker; docker save stefaniuk/ubuntu-desktop > ~/docker/image.tar
 test:
   override:
-    - docker create --interactive --tty --name ubuntu-desktop --env "USER=default" stefaniuk/ubuntu-desktop /bin/bash -cli "vncserver :1 -geometry 1280x800 -depth 24 && tail -F /home/default/.vnc/*.log"
-    - docker start ubuntu-desktop
-    - docker exec --interactive --tty ubuntu-desktop ps auxw | grep "default.\+vncserver"
+    - docker run --interactive --tty stefaniuk/ubuntu date | grep -v "UTC"
+    - docker run --interactive --tty stefaniuk/ubuntu locale | grep "LANG=en_GB.UTF-8"
+    - docker run --interactive --tty stefaniuk/ubuntu ps aux | grep "default.\+ps aux"
+    - docker run --interactive --tty --env "RUN_AS=root" stefaniuk/ubuntu ps aux | grep "root.\+ps aux"
