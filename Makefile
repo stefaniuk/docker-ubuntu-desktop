@@ -12,7 +12,7 @@ help:
 	@echo
 	@echo "Usage:"
 	@echo
-	@echo "    make build|run|create|start|stop|test|bash|clean|remove|push [APT_PROXY|APT_PROXY_SSL=ip:port]"
+	@echo "    make build|create|start|stop|test|bash|clean|remove|push [APT_PROXY|APT_PROXY_SSL=ip:port]"
 	@echo
 
 build:
@@ -27,18 +27,6 @@ build:
 		--rm .
 	@docker tag $(IMAGE):$(shell cat VERSION) $(IMAGE):latest
 
-run:
-	@docker stop $(IMAGE) > /dev/null 2>&1 ||:
-	@docker rm $(IMAGE) > /dev/null 2>&1 ||:
-	@docker run --rm --interactive --tty \
-		--name $(NAME) \
-		--hostname $(NAME) \
-		--env "USER=default" \
-		--env "RUN_AS=default" \
-		--publish 5901:5901 \
-		$(IMAGE) \
-		/bin/bash -cli "vncserver :1 -geometry 1280x800 -depth 24 && tail -F /home/default/.vnc/*.log"
-
 create:
 	@docker stop $(IMAGE) > /dev/null 2>&1 ||:
 	@docker rm $(IMAGE) > /dev/null 2>&1 ||:
@@ -46,7 +34,6 @@ create:
 		--name $(NAME) \
 		--hostname $(NAME) \
 		--env "USER=default" \
-		--env "RUN_AS=default" \
 		--publish 5901:5901 \
 		$(IMAGE) \
 		/bin/bash -cli "vncserver :1 -geometry 1280x800 -depth 24 && tail -F /home/default/.vnc/*.log"

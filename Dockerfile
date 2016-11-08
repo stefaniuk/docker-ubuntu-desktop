@@ -18,15 +18,15 @@ RUN set -ex \
         tightvncserver \
         xfonts-base \
     \
+    && mkdir -p /home/$SYSTEM_USER/.vnc \
+    && touch /home/$SYSTEM_USER/.Xresources \
+    && touch /home/$SYSTEM_USER/.Xauthority \
+    && echo $SYSTEM_USER_PASSWORD | vncpasswd -f > /home/$SYSTEM_USER/.vnc/passwd \
+    && chmod 600 /home/$SYSTEM_USER/.vnc/passwd \
+    && chown -R $SYSTEM_USER:$SYSTEM_USER /home/$SYSTEM_USER/.vnc \
+    \
     && rm -rf /tmp/* /var/tmp/* /var/lib/apt/lists/* /var/cache/apt/* \
     && rm -f /etc/apt/apt.conf.d/00proxy
-
-RUN mkdir -p /home/$SYSTEM_USER/.vnc
-RUN touch /home/$SYSTEM_USER/.Xresources
-RUN touch /home/$SYSTEM_USER/.Xauthority
-RUN echo $SYSTEM_USER_PASSWORD | vncpasswd -f > /home/$SYSTEM_USER/.vnc/passwd
-RUN chmod 600 /home/$SYSTEM_USER/.vnc/passwd
-RUN chown -R $SYSTEM_USER:$SYSTEM_USER /home/$SYSTEM_USER/.vnc
 
 EXPOSE 5901
 
