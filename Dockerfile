@@ -3,8 +3,12 @@ MAINTAINER daniel.stefaniuk@gmail.com
 
 ARG APT_PROXY
 ARG APT_PROXY_SSL
-
-ENV SYSTEM_USER_PASSWORD="password"
+ENV HOME=/home/$SYSTEM_USER \
+    USER="$SYSTEM_USER" \
+    PASSWORD="default" \
+    DISPLAY=":1" \
+    RESOLUTION="1024x768" \
+    COLOUR_DEPTH="16"
 
 RUN set -ex \
     \
@@ -13,22 +17,34 @@ RUN set -ex \
     && echo "APT::Install-Recommends 0;\nAPT::Install-Suggests 0;" >> /etc/apt/apt.conf.d/01norecommends \
     && apt-get --yes update \
     && apt-get --yes install \
-        lxde-core \
-        lxterminal \
-        tightvncserver \
+        xfce4 \
+        xfce4-goodies \
+        xbase-clients \
         xfonts-base \
+        xfonts-75dpi \
+        xfonts-100dpi \
+        xfonts-scalable \
+        tightvncserver \
     \
-    && mkdir -p /home/$SYSTEM_USER/.vnc \
-    && touch /home/$SYSTEM_USER/.Xresources \
-    && touch /home/$SYSTEM_USER/.Xauthority \
-    && echo $SYSTEM_USER_PASSWORD | vncpasswd -f > /home/$SYSTEM_USER/.vnc/passwd \
-    && chmod 600 /home/$SYSTEM_USER/.vnc/passwd \
-    && chown -R $SYSTEM_USER:$SYSTEM_USER /home/$SYSTEM_USER/.vnc \
+    && mkdir -p $HOME/.vnc \
+    && touch $HOME/.Xresources \
+    && touch $HOME/.Xauthority \
+    \
+    # SEE: https://github.com/stefaniuk/dotfiles
+    && curl -L https://raw.githubusercontent.com/stefaniuk/dotfiles/master/dotfiles -o - | /bin/bash -s -- \
+        --config=bash \
+        --minimal \
+        --directory=$HOME \
+    && chsh -s /bin/bash $SYSTEM_USER \
     \
     && rm -rf /tmp/* /var/tmp/* /var/lib/apt/lists/* /var/cache/apt/* \
     && rm -f /etc/apt/apt.conf.d/00proxy
 
-EXPOSE 5901
+WORKDIR $HOME
+EXPOSE 5901-5999
+
+COPY assets/sbin/* /sbin/
+COPY assets/sbin/init.d/* /sbin/init.d/
 
 ### METADATA ###################################################################
 
