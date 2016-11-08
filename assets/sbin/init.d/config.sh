@@ -1,7 +1,7 @@
 #!/bin/bash
 set -e
 
-# generate password
+# update password
 echo $PASSWORD | vncpasswd -f > $HOME/.vnc/passwd
 chmod 600 $HOME/.vnc/passwd
 
