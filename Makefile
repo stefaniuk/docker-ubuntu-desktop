@@ -49,7 +49,7 @@ test:
 	docker exec --interactive --tty \
 		--user "default" \
 		$(NAME) \
-		ps aux
+		ps auxw
 
 bash:
 	docker exec --interactive --tty \
