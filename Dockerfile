@@ -1,14 +1,12 @@
-FROM stefaniuk/ubuntu
+FROM stefaniuk/ubuntu:16.04-20161109
 MAINTAINER daniel.stefaniuk@gmail.com
 
 ARG APT_PROXY
 ARG APT_PROXY_SSL
-ENV HOME=/home/$SYSTEM_USER \
-    USER="$SYSTEM_USER" \
-    PASSWORD="default" \
-    DISPLAY=":1" \
+ENV DISPLAY=":1" \
     RESOLUTION="1024x768" \
-    COLOUR_DEPTH="16"
+    COLOUR_DEPTH="16" \
+    PASSWORD="default"
 
 RUN set -ex \
     \
@@ -16,6 +14,7 @@ RUN set -ex \
     && if [ -n "$APT_PROXY_SSL" ]; then echo "Acquire::https { Proxy \"https://${APT_PROXY_SSL}\"; };" > /etc/apt/apt.conf.d/00proxy; fi \
     && echo "APT::Install-Recommends 0;\nAPT::Install-Suggests 0;" >> /etc/apt/apt.conf.d/01norecommends \
     && apt-get --yes update \
+    && apt-get --yes upgrade \
     && apt-get --yes install \
         xfce4 \
         xfce4-goodies \
@@ -26,26 +25,26 @@ RUN set -ex \
         xfonts-scalable \
         tightvncserver \
     \
-    && mkdir -p $HOME/.vnc \
-    && touch $HOME/.Xresources \
-    && touch $HOME/.Xauthority \
+    && mkdir -p /home/$SYSTEM_USER/.vnc \
+    && touch /home/$SYSTEM_USER/.Xresources \
+    && touch /home/$SYSTEM_USER/.Xauthority \
     \
     # SEE: https://github.com/stefaniuk/dotfiles
     && curl -L https://raw.githubusercontent.com/stefaniuk/dotfiles/master/dotfiles -o - | /bin/bash -s -- \
         --config=bash \
         --minimal \
-        --directory=$HOME \
+        --directory=/home/$SYSTEM_USER \
     && chsh -s /bin/bash $SYSTEM_USER \
     \
     && rm -rf /tmp/* /var/tmp/* /var/lib/apt/lists/* /var/cache/apt/* \
     && rm -f /etc/apt/apt.conf.d/00proxy
 
-WORKDIR $HOME
+WORKDIR /home/$SYSTEM_USER
 EXPOSE 5901-5999
 
 COPY assets/sbin/init.d/config.sh /sbin/init.d/config.sh
-COPY assets/sbin/vncserver.sh /sbin/vncserver.sh
-CMD [ "/sbin/vncserver.sh" ]
+COPY assets/sbin/init.sh /sbin/init.sh
+CMD [ "/sbin/init.sh" ]
 
 ### METADATA ###################################################################
 
