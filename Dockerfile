@@ -4,8 +4,8 @@ MAINTAINER daniel.stefaniuk@gmail.com
 ARG APT_PROXY
 ARG APT_PROXY_SSL
 ENV DISPLAY=":1" \
-    RESOLUTION="1024x768" \
-    COLOUR_DEPTH="16" \
+    RESOLUTION="1280x1024" \
+    COLOUR_DEPTH="24" \
     PASSWORD="default"
 
 RUN set -ex \
@@ -42,6 +42,7 @@ RUN set -ex \
 WORKDIR /home/$SYSTEM_USER
 EXPOSE 5901-5999
 
+COPY assets/home/.config /home/$SYSTEM_USER/.config
 COPY assets/sbin/init.d/config.sh /sbin/init.d/config.sh
 COPY assets/sbin/init.sh /sbin/init.sh
 CMD [ "/sbin/init.sh" ]
