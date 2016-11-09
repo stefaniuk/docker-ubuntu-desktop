@@ -11,7 +11,5 @@ dependencies:
     - mkdir -p ~/docker; docker save stefaniuk/ubuntu-desktop > ~/docker/image.tar
 test:
   override:
-    - docker run --interactive --tty stefaniuk/ubuntu-desktop date | grep -v "UTC"
-    - docker run --interactive --tty stefaniuk/ubuntu-desktop locale | grep "LANG=en_GB.UTF-8"
     - docker run --interactive --tty stefaniuk/ubuntu-desktop ps aux | grep "default.\+ps aux"
-    - docker run --interactive --tty --env "RUN_AS=root" stefaniuk/ubuntu-desktop ps aux | grep "root.\+ps aux"
+    - docker run --interactive --tty stefaniuk/ubuntu-desktop ls /home/default/dotfiles | grep "/home/default/dotfiles"

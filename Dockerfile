@@ -43,8 +43,9 @@ RUN set -ex \
 WORKDIR $HOME
 EXPOSE 5901-5999
 
-COPY assets/sbin/* /sbin/
-COPY assets/sbin/init.d/* /sbin/init.d/
+COPY assets/sbin/init.d/config.sh /sbin/init.d/config.sh
+COPY assets/sbin/vncserver.sh /sbin/vncserver.sh
+CMD [ "/sbin/vncserver.sh" ]
 
 ### METADATA ###################################################################
 
