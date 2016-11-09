@@ -16,3 +16,15 @@ Alternatively you can build the image yourself.
 
     docker build --tag stefaniuk/ubuntu-desktop \
         github.com/stefaniuk/docker-ubuntu-desktop
+
+Testing
+-------
+
+    make build create start log
+
+Then connect to `vnc://localhost:5901` using for example [Remmina](http://www.remmina.org/wp/) VNC client. The default password is `default`.
+
+TODO
+----
+
+ * Configure Xfce Desktop Environment
