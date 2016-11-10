@@ -8,7 +8,7 @@ My customised Ubuntu desktop baseimage.
 Installation
 ------------
 
-Builds of the image are available on [Docker Hub](https://hub.docker.com/r/stefaniuk/ubuntu/).
+Builds of the image are available on [Docker Hub](https://hub.docker.com/r/stefaniuk/ubuntu-desktop/).
 
     docker pull stefaniuk/ubuntu-desktop
 
