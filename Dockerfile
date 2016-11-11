@@ -1,4 +1,4 @@
-FROM stefaniuk/ubuntu:16.04-20161109
+FROM stefaniuk/ubuntu:16.04-20161111
 MAINTAINER daniel.stefaniuk@gmail.com
 
 ARG APT_PROXY
