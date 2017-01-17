@@ -1,5 +1,4 @@
 FROM stefaniuk/ubuntu:16.04-20170117
-MAINTAINER daniel.stefaniuk@gmail.com
 
 ARG APT_PROXY
 ARG APT_PROXY_SSL
