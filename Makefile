@@ -33,6 +33,7 @@ create:
 	docker create --interactive --tty \
 		--name $(NAME) \
 		--hostname $(NAME) \
+		--env "DEBUG=true" \
 		--publish 5901:5901 \
 		$(IMAGE)
 
