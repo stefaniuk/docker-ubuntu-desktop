@@ -32,6 +32,7 @@ RUN set -ex \
         --config=bash \
         --minimal \
         --directory=/home/$SYSTEM_USER \
+    && chown -R $SYSTEM_USER:$SYSTEM_USER /home/$SYSTEM_USER \
     && chsh -s /bin/bash $SYSTEM_USER \
     \
     && rm -rf /tmp/* /var/tmp/* /var/lib/apt/lists/* /var/cache/apt/* \
