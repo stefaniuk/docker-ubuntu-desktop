@@ -20,7 +20,7 @@ Alternatively you can build the image yourself.
 Testing
 -------
 
-    make build create start log
+    make build start log
 
 Then connect to `vnc://localhost:5901` using for example [Remmina](http://www.remmina.org/wp/) VNC client. The default password is `default`.
 
