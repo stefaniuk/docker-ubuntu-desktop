@@ -7,9 +7,9 @@ dependencies:
   override:
     - docker info
     - if [[ -e ~/docker/image.tar ]]; then docker load --input ~/docker/image.tar; fi
-    - docker build --tag stefaniuk/ubuntu-desktop .
-    - mkdir -p ~/docker; docker save stefaniuk/ubuntu-desktop > ~/docker/image.tar
+    - docker build --tag codeworksio/ubuntu-desktop .
+    - mkdir -p ~/docker; docker save codeworksio/ubuntu-desktop > ~/docker/image.tar
 test:
   override:
-    - docker run --interactive --tty stefaniuk/ubuntu-desktop ps aux | grep "default.\+ps aux"
-    - docker run --interactive --tty stefaniuk/ubuntu-desktop ls /home/default/dotfiles | grep "/home/default/dotfiles"
+    - docker run --interactive --tty codeworksio/ubuntu-desktop ps aux | grep "default.\+ps aux"
+    - docker run --interactive --tty codeworksio/ubuntu-desktop ls /home/default/dotfiles | grep "/home/default/dotfiles"

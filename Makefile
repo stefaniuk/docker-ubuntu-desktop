@@ -1,10 +1,5 @@
-ifdef GITHUB_ACCOUNT
-	OWNER := $(GITHUB_ACCOUNT)
-else
-	OWNER := $(USER)
-endif
 NAME := $(subst docker-,,$(shell basename $(shell dirname $(realpath  $(lastword $(MAKEFILE_LIST))))))
-IMAGE :=  $(OWNER)/$(NAME)
+IMAGE :=  codeworksio/$(NAME)
 
 all: help
 
@@ -26,7 +21,7 @@ build:
 		--tag $(IMAGE):$(shell cat VERSION) \
 		--rm .
 	docker tag $(IMAGE):$(shell cat VERSION) $(IMAGE):latest
-	docker rmi --force $$(docker images | grep "<none>" | awk '{print $$3}')
+	docker rmi --force $$(docker images | grep "<none>" | awk '{ print $$3 }') ||:
 
 start:
 	docker stop $(IMAGE) > /dev/null 2>&1 ||:

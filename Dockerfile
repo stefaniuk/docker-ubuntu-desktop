@@ -1,4 +1,4 @@
-FROM stefaniuk/ubuntu:16.04-20170320
+FROM codeworksio/ubuntu:16.04-20170425
 
 ARG APT_PROXY
 ARG APT_PROXY_SSL
