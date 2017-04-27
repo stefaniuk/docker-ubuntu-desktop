@@ -5,7 +5,7 @@ ARG APT_PROXY_SSL
 ENV DISPLAY=":1" \
     RESOLUTION="1280x1024" \
     COLOUR_DEPTH="24" \
-    PASSWORD="default"
+    PASSWORD="password"
 
 RUN set -ex \
     \
@@ -34,6 +34,8 @@ RUN set -ex \
         --directory=/home/$SYSTEM_USER \
     && chown -R $SYSTEM_USER:$SYSTEM_USER /home/$SYSTEM_USER \
     && chsh -s /bin/bash $SYSTEM_USER \
+    \
+    && echo "root:$PASSWORD" | chpasswd \
     \
     && rm -rf /tmp/* /var/tmp/* /var/lib/apt/lists/* /var/cache/apt/* \
     && rm -f /etc/apt/apt.conf.d/00proxy
