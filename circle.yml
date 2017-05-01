@@ -11,5 +11,5 @@ dependencies:
     - mkdir -p ~/docker; docker save codeworksio/ubuntu-desktop > ~/docker/image.tar
 test:
   override:
-    - docker run --interactive --tty codeworksio/ubuntu-desktop ps aux | grep "default.\+ps aux"
-    - docker run --interactive --tty codeworksio/ubuntu-desktop ls /home/default/dotfiles | grep "/home/default/dotfiles"
+    - docker run --interactive --tty codeworksio/ubuntu-desktop ps aux | grep "ubuntu.\+ps aux"
+    - docker run --interactive --tty codeworksio/ubuntu-desktop ls /home/ubuntu/dotfiles | grep "/home/ubuntu/dotfiles"

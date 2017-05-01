@@ -29,7 +29,7 @@ start:
 	docker run --detach --interactive --tty \
 		--name $(NAME) \
 		--hostname $(NAME) \
-		--env "DEBUG=true" \
+		--env "INIT_DEBUG=true" \
 		--publish 5901:5901 \
 		$(IMAGE)
 
@@ -41,7 +41,7 @@ log:
 
 test:
 	docker exec --interactive --tty \
-		--user "default" \
+		--user "ubuntu" \
 		$(NAME) \
 		ps auxw
 

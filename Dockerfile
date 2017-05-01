@@ -1,11 +1,11 @@
-FROM codeworksio/ubuntu:16.04-20170425
+FROM codeworksio/ubuntu:latest
 
 ARG APT_PROXY
 ARG APT_PROXY_SSL
-ENV DISPLAY=":1" \
-    RESOLUTION="1280x1024" \
-    COLOUR_DEPTH="24" \
-    PASSWORD="password"
+ENV VNC_DISPLAY=":1" \
+    VNC_RESOLUTION="1280x1024" \
+    VNC_COLOUR_DEPTH="24" \
+    VNC_PASSWORD="ubuntu"
 
 RUN set -ex \
     \
@@ -23,19 +23,20 @@ RUN set -ex \
         xfonts-scalable \
         tightvncserver \
     \
+    && echo "root:$VNC_PASSWORD" | chpasswd \
     && mkdir -p /home/$SYSTEM_USER/.vnc \
     && touch /home/$SYSTEM_USER/.Xresources \
     && touch /home/$SYSTEM_USER/.Xauthority \
     \
     # SEE: https://github.com/stefaniuk/dotfiles
+    && USER_NAME="$SYSTEM_USER" \
+    && USER_EMAIL="$SYSTEM_USER" \
     && curl -L https://raw.githubusercontent.com/stefaniuk/dotfiles/master/dotfiles -o - | /bin/bash -s -- \
         --config=bash \
         --minimal \
         --directory=/home/$SYSTEM_USER \
     && chown -R $SYSTEM_USER:$SYSTEM_USER /home/$SYSTEM_USER \
     && chsh -s /bin/bash $SYSTEM_USER \
-    \
-    && echo "root:$PASSWORD" | chpasswd \
     \
     && rm -rf /tmp/* /var/tmp/* /var/lib/apt/lists/* /var/cache/apt/* \
     && rm -f /etc/apt/apt.conf.d/00proxy

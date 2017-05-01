@@ -2,7 +2,7 @@
 set -e
 
 # update password
-echo $PASSWORD | vncpasswd -f > /home/$SYSTEM_USER/.vnc/passwd
+echo $VNC_PASSWORD | vncpasswd -f > /home/$SYSTEM_USER/.vnc/passwd
 chmod 600 /home/$SYSTEM_USER/.vnc/passwd
 
 # set ownership
