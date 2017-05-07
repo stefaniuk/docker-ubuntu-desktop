@@ -3,7 +3,7 @@
 Docker Ubuntu Desktop
 =====================
 
-My customised Ubuntu desktop baseimage.
+Customised Ubuntu desktop base image.
 
 Installation
 ------------
@@ -17,12 +17,20 @@ Alternatively you can build the image yourself.
     docker build --tag codeworksio/ubuntu-desktop \
         github.com/codeworksio/docker-ubuntu-desktop
 
+Configuration
+-------------
+
+- Password is `ubuntu` for both the system user `ubuntu` and `root`
+- Use `VNC_DISPLAY=":1"` to set display
+- Use `VNC_RESOLUTION="1280x1024"` to set screen resolution
+- Use `VNC_COLOUR_DEPTH="24"` to set colour depth
+
 Testing
 -------
 
     make build start log
 
-Then connect to `vnc://localhost:5901` using for example [Remmina](http://www.remmina.org/wp/) VNC client. The default password is `default`.
+Then connect to `vnc://localhost:5901` using for example [Remmina](http://www.remmina.org/wp/) VNC client.
 
 TODO
 ----
