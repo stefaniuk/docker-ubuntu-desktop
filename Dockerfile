@@ -32,8 +32,6 @@ RUN set -ex \
     && USER_NAME="$SYSTEM_USER" \
     && USER_EMAIL="$SYSTEM_USER" \
     && curl -L https://raw.githubusercontent.com/stefaniuk/dotfiles/master/dotfiles -o - | /bin/bash -s -- \
-        --config=bash \
-        --minimal \
         --directory=/home/$SYSTEM_USER \
     && chown -R $SYSTEM_USER:$SYSTEM_USER /home/$SYSTEM_USER \
     && chsh -s /bin/bash $SYSTEM_USER \
