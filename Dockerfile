@@ -1,4 +1,4 @@
-FROM codeworksio/ubuntu:latest
+FROM codeworksio/ubuntu:16.04-20170604
 
 ARG APT_PROXY
 ARG APT_PROXY_SSL
@@ -39,12 +39,12 @@ RUN set -ex \
     && rm -rf /tmp/* /var/tmp/* /var/lib/apt/lists/* /var/cache/apt/* \
     && rm -f /etc/apt/apt.conf.d/00proxy
 
-WORKDIR /home/$SYSTEM_USER
-EXPOSE 5901-5999
-
 COPY assets/home/.config /home/$SYSTEM_USER/.config
 COPY assets/sbin/bootstrap.sh /sbin/bootstrap.sh
 COPY assets/sbin/vnc.sh /sbin/vnc.sh
+
+WORKDIR /home/$SYSTEM_USER
+EXPOSE 5901-5999
 CMD [ "/sbin/vnc.sh" ]
 
 ### METADATA ###################################################################
