@@ -41,11 +41,11 @@ RUN set -ex \
 
 COPY assets/home/.config /home/$SYSTEM_USER/.config
 COPY assets/sbin/bootstrap.sh /sbin/bootstrap.sh
-COPY assets/sbin/vnc.sh /sbin/vnc.sh
+COPY assets/sbin/init.sh /sbin/init.sh
 
 WORKDIR /home/$SYSTEM_USER
 EXPOSE 5901-5999
-CMD [ "/sbin/vnc.sh" ]
+CMD [ "/sbin/init.sh" ]
 
 ### METADATA ###################################################################
 
