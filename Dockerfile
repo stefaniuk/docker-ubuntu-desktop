@@ -1,4 +1,4 @@
-FROM codeworksio/ubuntu:16.04-20170613
+FROM codeworksio/ubuntu:16.04-20170614
 
 ARG APT_PROXY
 ARG APT_PROXY_SSL
@@ -38,10 +38,6 @@ RUN set -ex \
     \
     && rm -rf /tmp/* /var/tmp/* /var/lib/apt/lists/* /var/cache/apt/* \
     && rm -f /etc/apt/apt.conf.d/00proxy
-
-COPY assets/home/.config /home/$SYSTEM_USER/.config
-COPY assets/sbin/bootstrap.sh /sbin/bootstrap.sh
-COPY assets/sbin/init.sh /sbin/init.sh
 
 WORKDIR /home/$SYSTEM_USER
 EXPOSE 5901-5999
