@@ -20,10 +20,10 @@ Alternatively you can build the image yourself.
 Configuration
 -------------
 
-- Password is `ubuntu` for both the system user `ubuntu` and `root`
-- Use `VNC_DISPLAY=":1"` to set display
-- Use `VNC_RESOLUTION="1280x1024"` to set screen resolution
-- Use `VNC_COLOUR_DEPTH="24"` to set colour depth
+* Password is `ubuntu` for both the system user `ubuntu` and `root`
+* Use `VNC_DISPLAY=":1"` to set display
+* Use `VNC_RESOLUTION="1280x1024"` to set screen resolution
+* Use `VNC_COLOUR_DEPTH="24"` to set colour depth
 
 Testing
 -------
@@ -35,4 +35,4 @@ Then connect to `vnc://localhost:5901` using for example [Remmina](http://www.re
 TODO
 ----
 
- * Configure Xfce Desktop Environment
+* Configure Xfce Desktop Environment
