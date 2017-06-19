@@ -30,7 +30,7 @@ Testing
 
     make build start log
 
-Then connect to `vnc://localhost:5901` using for example [Remmina](http://www.remmina.org/wp/) VNC client.
+Then connect to `vnc://localhost:5901` using for example Safari browser or [Remmina](http://www.remmina.org/wp/) VNC client.
 
 TODO
 ----
