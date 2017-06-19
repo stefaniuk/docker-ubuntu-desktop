@@ -35,4 +35,4 @@ Then connect to `vnc://localhost:5901` using for example [Remmina](http://www.re
 TODO
 ----
 
-* Configure Xfce Desktop Environment
+* Fix Xfce desktop environment configuration
