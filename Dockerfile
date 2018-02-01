@@ -1,4 +1,4 @@
-FROM codeworksio/ubuntu:16.04-20180120
+FROM codeworksio/ubuntu:16.04-20180201
 
 ARG APT_PROXY
 ARG APT_PROXY_SSL
@@ -9,20 +9,21 @@ ENV VNC_DISPLAY=":1" \
 
 RUN set -ex \
     \
+    # install system packages
     && if [ -n "$APT_PROXY" ]; then echo "Acquire::http { Proxy \"http://${APT_PROXY}\"; };" > /etc/apt/apt.conf.d/00proxy; fi \
     && if [ -n "$APT_PROXY_SSL" ]; then echo "Acquire::https { Proxy \"https://${APT_PROXY_SSL}\"; };" > /etc/apt/apt.conf.d/00proxy; fi \
     && apt-get --yes update \
     && apt-get --yes upgrade \
-    && apt-get --yes install \
-        xfce4 \
-        xfce4-goodies \
-        xbase-clients \
-        xfonts-base \
-        xfonts-75dpi \
-        xfonts-100dpi \
-        xfonts-scalable \
+    && DEBIAN_FRONTEND=noninteractive apt-get --yes install \
+        gnome-panel \
+        gnome-settings-daemon \
+        gnome-terminal \
+        metacity \
+        nautilus \
         tightvncserver \
+        ubuntu-desktop \
     \
+    # configure system user
     && echo "root:$VNC_PASSWORD" | chpasswd \
     && mkdir -p /home/$SYSTEM_USER/.vnc \
     && touch /home/$SYSTEM_USER/.Xresources \
@@ -33,6 +34,7 @@ RUN set -ex \
     && USER_EMAIL="$SYSTEM_USER" \
     && curl -L https://raw.githubusercontent.com/stefaniuk/dotfiles/master/dotfiles -o - | /bin/bash -s -- \
         --directory=/home/$SYSTEM_USER \
+        --minimal \
     && chown -R $SYSTEM_USER:$SYSTEM_USER /home/$SYSTEM_USER \
     && chsh -s /bin/bash $SYSTEM_USER \
     \
