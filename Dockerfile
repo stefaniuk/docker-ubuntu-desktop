@@ -18,11 +18,12 @@ RUN set -ex \
         dbus-x11 \
         tightvncserver \
         xbase-clients \
+        xfce4 \
+        xfce4-terminal \
         xfonts-100dpi \
         xfonts-75dpi \
         xfonts-base \
         xfonts-scalable \
-        xubuntu-desktop \
     \
     # configure system user
     && echo "root:$VNC_PASSWORD" | chpasswd \
