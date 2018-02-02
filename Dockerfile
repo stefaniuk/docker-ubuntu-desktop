@@ -1,4 +1,4 @@
-FROM codeworksio/ubuntu:16.04-20180201
+FROM codeworksio/ubuntu:16.04-20180202
 
 ARG APT_PROXY
 ARG APT_PROXY_SSL
@@ -15,13 +15,14 @@ RUN set -ex \
     && apt-get --yes update \
     && apt-get --yes upgrade \
     && DEBIAN_FRONTEND=noninteractive apt-get --yes install \
-        gnome-panel \
-        gnome-settings-daemon \
-        gnome-terminal \
-        metacity \
-        nautilus \
+        dbus-x11 \
         tightvncserver \
-        ubuntu-desktop \
+        xbase-clients \
+        xfonts-100dpi \
+        xfonts-75dpi \
+        xfonts-base \
+        xfonts-scalable \
+        xubuntu-desktop \
     \
     # configure system user
     && echo "root:$VNC_PASSWORD" | chpasswd \
