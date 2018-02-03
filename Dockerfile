@@ -1,4 +1,4 @@
-FROM codeworksio/ubuntu:16.04-20180202
+FROM codeworksio/ubuntu:16.04-20180203
 
 ARG APT_PROXY
 ARG APT_PROXY_SSL
@@ -14,7 +14,7 @@ RUN set -ex \
     && if [ -n "$APT_PROXY_SSL" ]; then echo "Acquire::https { Proxy \"https://${APT_PROXY_SSL}\"; };" > /etc/apt/apt.conf.d/00proxy; fi \
     && apt-get --yes update \
     && apt-get --yes upgrade \
-    && DEBIAN_FRONTEND=noninteractive apt-get --yes install \
+    && apt-get --yes install \
         dbus-x11 \
         tightvncserver \
         xbase-clients \
