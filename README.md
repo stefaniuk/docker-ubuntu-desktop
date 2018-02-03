@@ -35,4 +35,5 @@ Then connect to `vnc://localhost:5901` using for example Safari browser or [Remm
 TODO
 ----
 
-* Fix Xfce desktop environment configuration
+* Add [noVNC](https://github.com/novnc/noVNC) client
+* Install Xfce [theme](https://wiki.xfce.org/howto/install_new_themes)
