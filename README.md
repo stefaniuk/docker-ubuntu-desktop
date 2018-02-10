@@ -29,11 +29,12 @@ Testing
 -------
 
     make build start log
+    make stop
 
 Then connect to `vnc://localhost:5901` using for example Safari browser or [Remmina](http://www.remmina.org/wp/) VNC client.
 
 TODO
 ----
 
-* Add [noVNC](https://github.com/novnc/noVNC) client
-* Install Xfce [theme](https://wiki.xfce.org/howto/install_new_themes)
+* Install [noVNC client](https://github.com/novnc/noVNC)
+* Install [Xfce theme](https://wiki.xfce.org/howto/install_new_themes)
