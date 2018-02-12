@@ -41,10 +41,10 @@ log:
 	docker logs --follow $(NAME)
 
 test:
-	docker exec --interactive --tty \
-		--user ubuntu \
-		$(NAME) \
-		ps auxw
+	docker run --interactive --tty --rm codeworksio/ubuntu-desktop \
+		ps aux | grep "ubuntu.\+ps aux"
+	docker run --interactive --tty --rm codeworksio/ubuntu-desktop \
+		ls /home/ubuntu/dotfiles | grep "/home/ubuntu/dotfiles"
 
 bash:
 	docker exec --interactive --tty \

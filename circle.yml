@@ -1,15 +1,9 @@
 machine:
   services:
     - docker
-dependencies:
-  cache_directories:
-    - "~/docker"
-  override:
-    - docker info
-    - if [[ -e ~/docker/image.tar ]]; then docker load --input ~/docker/image.tar; fi
-    - docker build --tag codeworksio/ubuntu-desktop .
-    - mkdir -p ~/docker; docker save codeworksio/ubuntu-desktop > ~/docker/image.tar
 test:
   override:
-    - docker run --interactive --tty codeworksio/ubuntu-desktop ps aux | grep "ubuntu.\+ps aux"
-    - docker run --interactive --tty codeworksio/ubuntu-desktop ls /home/ubuntu/dotfiles | grep "/home/ubuntu/dotfiles"
+    - docker login -e $DOCKER_EMAIL -u $DOCKER_USER -p $DOCKER_PASS
+    - make build
+    - make test
+    - make push
