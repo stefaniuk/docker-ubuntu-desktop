@@ -59,6 +59,7 @@ clean:
 push:
 	docker push $(IMAGE):$(shell cat VERSION)
 	docker push $(IMAGE):latest
+	sleep 10
 	curl --request POST "https://hooks.microbadger.com/images/$(IMAGE)/nPpNiQsse-g9qG_XTrKguTs-Wfc="
 
 .SILENT:
