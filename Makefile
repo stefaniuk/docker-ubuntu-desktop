@@ -62,4 +62,4 @@ push:
 	sleep 10
 	curl --request POST "https://hooks.microbadger.com/images/$(IMAGE)/nPpNiQsse-g9qG_XTrKguTs-Wfc="
 
-.SILENT:
+.SILENT: help

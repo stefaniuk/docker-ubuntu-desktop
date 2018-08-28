@@ -1,4 +1,4 @@
-FROM codeworksio/ubuntu:18.04-20180212
+FROM codeworksio/ubuntu:18.04-20180827
 
 ARG APT_PROXY
 ARG APT_PROXY_SSL
@@ -7,13 +7,13 @@ ENV VNC_DISPLAY=":1" \
     VNC_COLOUR_DEPTH="24" \
     VNC_PASSWORD="ubuntu"
 
-RUN set -ex; \
+RUN set -ex && \
     \
     # install system packages
-    if [ -n "$APT_PROXY" ]; then echo "Acquire::http { Proxy \"http://${APT_PROXY}\"; };" > /etc/apt/apt.conf.d/00proxy; fi; \
-    if [ -n "$APT_PROXY_SSL" ]; then echo "Acquire::https { Proxy \"https://${APT_PROXY_SSL}\"; };" > /etc/apt/apt.conf.d/00proxy; fi; \
-    apt-get --yes update; \
-    apt-get --yes upgrade; \
+    if [ -n "$APT_PROXY" ]; then echo "Acquire::http { Proxy \"http://${APT_PROXY}\"; };" > /etc/apt/apt.conf.d/00proxy; fi && \
+    if [ -n "$APT_PROXY_SSL" ]; then echo "Acquire::https { Proxy \"https://${APT_PROXY_SSL}\"; };" > /etc/apt/apt.conf.d/00proxy; fi && \
+    apt-get --yes update && \
+    apt-get --yes upgrade && \
     apt-get --yes install \
         dbus-x11 \
         tightvncserver \
@@ -24,21 +24,23 @@ RUN set -ex; \
         xfonts-75dpi \
         xfonts-base \
         xfonts-scalable \
-    ; \
+    && \
     # configure system user
-    echo "root:$VNC_PASSWORD" | chpasswd; \
-    mkdir -p /home/$SYSTEM_USER/.vnc; \
-    touch /home/$SYSTEM_USER/.Xresources; \
-    touch /home/$SYSTEM_USER/.Xauthority; \
+    echo "root:$VNC_PASSWORD" | chpasswd && \
+    mkdir -p /home/$SYSTEM_USER/.vnc && \
+    touch /home/$SYSTEM_USER/.Xresources && \
+    touch /home/$SYSTEM_USER/.Xauthority && \
     \
     # SEE: https://github.com/stefaniuk/dotfiles
     curl -L https://raw.githubusercontent.com/stefaniuk/dotfiles/master/dotfiles -o - | /bin/bash -s -- \
         --directory=/home/$SYSTEM_USER \
-        --minimal; \
-    chown -R $SYSTEM_USER:$SYSTEM_USER /home/$SYSTEM_USER; \
-    chsh -s /bin/bash $SYSTEM_USER; \
+        --minimal \
+    && \
+    # configure system user
+    chown -R $SYSTEM_USER:$SYSTEM_USER /home/$SYSTEM_USER && \
+    chsh -s /bin/bash $SYSTEM_USER && \
     \
-    rm -rf /tmp/* /var/tmp/* /var/lib/apt/lists/* /var/cache/apt/*; \
+    rm -rf /tmp/* /var/tmp/* /var/lib/apt/lists/* /var/cache/apt/* && \
     rm -f /etc/apt/apt.conf.d/00proxy
 
 COPY assets/ /
