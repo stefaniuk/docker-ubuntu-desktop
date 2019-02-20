@@ -1,4 +1,4 @@
-FROM codeworksio/ubuntu:18.04-20180827
+FROM codeworksio/ubuntu:18.04-20190220
 
 ARG APT_PROXY
 ARG APT_PROXY_SSL
@@ -32,9 +32,10 @@ RUN set -ex && \
     touch /home/$SYSTEM_USER/.Xauthority && \
     \
     # SEE: https://github.com/stefaniuk/dotfiles
+    export USER_NAME=$SYSTEM_USER && \
+    export USER_EMAIL=${SYSTEM_USER}@local && \
     curl -L https://raw.githubusercontent.com/stefaniuk/dotfiles/master/dotfiles -o - | /bin/bash -s -- \
         --directory=/home/$SYSTEM_USER \
-        --minimal \
     && \
     # configure system user
     chown -R $SYSTEM_USER:$SYSTEM_USER /home/$SYSTEM_USER && \
